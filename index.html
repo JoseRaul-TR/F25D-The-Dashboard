@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="./style.css">
+
+    <script src="./script/time-date.js" defer></script>
+    <script src="./script/background-img-API.js" defer></script>
+
+    <title>Personlig Dashboard</title>
+</head>
+<body>
+
+    <header id="top-bar">
+        <div id="time-date">
+            <p>
+                <span id="time"></span><span id="date"></span>
+            </p>
+        </div>
+    </header>
+
+    <main id="dashboard">
+        <h1 id="dashboard-title">Min Dashboard</h1>
+
+        <section id="links">
+            <h2>Snabblänkar</h2>
+            <ul id="link-list">
+            </ul>
+            <div id="add-link-form">
+                <input type="text" id="link-title" placeholder="Länkens Titel">
+                <input type="url" id="link-url" placeholder="Länkens URL">
+                <button id="add-link-button">Lägg till länk</button>
+            </div>
+        </section>
+
+        <section id="weather">
+            <h2>Väder</h2>
+                <div id="weather-data"></div>
+            </section>
+
+            <section id="api-data">
+                <h2>API Data</h2>
+                <div id="api-content"></div>
+            </section>
+
+            <section id="notes">
+                <h2>Anteckningar</h2>
+                <textarea id="note-text"></textarea>
+            </section>
+
+            <button id="change-background"><i class="fas fa-arrows-rotate"></i>Slumpa ny backgrundbild</button>
+    </main>
+</body>
+</html>
