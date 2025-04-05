@@ -1,10 +1,15 @@
-const keyUnplash = ''; // Store Unsplash API key
+const keyAPIUnplash = process.argv[2]; 
+
+if (!keyAPIUnplash) {
+    console.error("API key not provided.");
+    process.exit(1);
+}
 
 async function fetchUnsplashPhoto(query = '') {
-    const url = `https://api.unsplash.com/photos/random?client_id=${keyUnplash}`; //URL Unplash Random Photo API
+    const url = `https://api.unsplash.com/photos/random?client_id=${keyAPIUnplash}`; //URL Unplash Random Photo API
 
     if (query) {
-        url += `&query=${query}`;
+        url += `&query=${encodeURIComponent(query)}`;
     }
 
     try {
@@ -13,7 +18,13 @@ async function fetchUnsplashPhoto(query = '') {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        return data.urls.regular; // Return the URL of the regular-sized image
+
+        if (data && data.urls && data.urls.regular) {
+            return data.urls.regular; //REturn the URL of the regular-sized image
+        } else {
+            console.error("Unexpected response structure form Unsplash AI: ", data);
+            return null; //Return null if the response is not as expected
+        }
     } catch (error) {
         console.error('Error fetching Unsplash photo:', error);
         return null; // Return null in case of an error

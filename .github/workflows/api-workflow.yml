@@ -1,0 +1,33 @@
+name: Unsplash Photo Fetch
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  fetch-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Run JavaScript script
+        run: |
+          node background-img-API.js "${{ secrets.UNPLASH_API_KEY }}"
+
+      - name: Example of using the output of the script.
+        id: image_url_output # Add an id to the step.
+        run: |
+          IMAGE_URL=$(node background-img-API.js "${{ secrets.UNPLASH_API_KEY }}")
+          echo "IMAGE_URL=$IMAGE_URL" >> $GITHUB_OUTPUT #Set the output of the step.
+
+      - name: Example of using image url.
+        run: |
+          echo "The image url was fetched: ${{ steps.image_url_output.outputs.IMAGE_URL }}"
