@@ -9,9 +9,10 @@ body {
     width: 100vw;
     height: 100vh;
     transition: backfround-image 0.5s ease-in-out;
+    background-color: #3fa5e5;
 }
 
-#top-bar {
+#topBar {
     text-align: center;
     margin: 0 auto;
     padding: 10px;
@@ -23,7 +24,7 @@ body {
     align-items: center;
 }
 
-#time-date {
+#timeDate {
     width: 25%;
     height: auto;
     padding: .2em 1em;
@@ -51,33 +52,33 @@ body {
     padding: 20px;
 }
 
-#dashboard-title {
+#dashboardTitle {
     text-align: center;
 }
 
-#links, #weather, #api-data, #notes {
+#links, #weather, #apiData, #notes {
     margin-bottom: 20px;
 }
 
-#link-list {
+#linkList {
     list-style: none;
     padding: 0;
 }
 
-#add-link-form {
+#addLinkForm {
     display: flex;
 }
 
-#add-link-form input {
+#addLinkForm input {
     margin-right: 10px;
 }
 
-#note-text {
+#noteText {
     width: 100%;
     height: 150px;
 }
 
-#random-background-btn {
+#randomBackgroundBtn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -97,6 +98,6 @@ body {
     cursor: pointer;
 }
 
-#random-background-btn i {
+#randomBackgroundBtn i {
     margin-right: 1em;
 }

@@ -9,14 +9,15 @@
     <link rel="stylesheet" href="./style.css">
 
     <script src="./JS/time-date.js" defer></script>
+    <script src="./JS/heading-config.js" defer></script>
     <script src="./Js/background-img-API.js" defer></script>
 
-    <title>Personlig Dashboard</title>
+    <title>Dashboard</title>
 </head>
 <body>
 
-    <header id="top-bar">
-        <div id="time-date">
+    <header id="topBar">
+        <div id="timeDate">
             <p>
                 <span id="time"></span><span id="date"></span>
             </p>
@@ -24,37 +25,54 @@
     </header>
 
     <main id="dashboard">
-        <h1 id="dashboard-title">Min Dashboard</h1>
+        <section id="title">
+            <h1 id="myTitle">Min Dashboard</h1>
+            <i id="headingConfigWheel" class="fa-solid fa-gear" style="cursor: pointer;"></i>
+
+            <div id="headingConfig" style="display: none;">
+                <input type="text" id="newTitle" placeholder="Ange ny rubriktext">
+                <button id="changeTitleBtn">Ändra rubrik</button>
+            </div>
+        </section>
 
         <section id="links">
             <h2>Snabblänkar</h2>
-            <ul id="link-list">
+            <ul id="linkList">
             </ul>
-            <div id="add-link-form">
-                <input type="text" id="link-title" placeholder="Länkens Titel">
-                <input type="url" id="link-url" placeholder="Länkens URL">
-                <button id="add-link-button">Lägg till länk</button>
+            <div id="addLinkForm">
+                <input type="text" id="linkTitle" placeholder="Länkens Titel">
+                <input type="url" id="linkUrl" placeholder="Länkens URL">
+                <button id="addLinkButton">Lägg till länk</button>
             </div>
         </section>
 
         <section id="weather">
             <h2>Väder</h2>
-                <div id="weather-data"></div>
+                <div id="weatherData"></div>
             </section>
 
-            <section id="api-data">
+            <section id="apiData">
                 <h2>API Data</h2>
-                <div id="api-content"></div>
+                <div id="apiContent"></div>
             </section>
 
             <section id="notes">
                 <h2>Anteckningar</h2>
-                <textarea id="note-text"></textarea>
+                <textarea id="noteText"></textarea>
             </section>
 
-            <input type="text" id="search-tnput" placeholder="Sök efter ett tema...">
-            <button id="change-background-btn">Ändra Bakgrund</button>
-            <button id="random-background-btn"><i class="fas fa-arrows-rotate"></i>Slumpa ny backgrundbild</button>
+            <input type="text" id="searchInput" placeholder="Sök efter ett tema...">
+            <button id="changeBackgroundBtn">Ändra Bakgrund</button>
+            <button id="randomBackgroundBtn"><i class="fas fa-arrows-rotate"></i>Slumpa ny backgrundbild</button>
+
+            <footer>
+
+                <p>&copy; <span id="current-year"></span> José Raúl Tenza Ramírez
+                    <br>
+                    All rights reserved
+                </p>
+        
+            </footer>
     </main>
 </body>
 </html>
