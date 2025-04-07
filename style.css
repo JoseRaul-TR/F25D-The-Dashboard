@@ -8,7 +8,7 @@ body {
     font-family: sans-serif;
     width: 100vw;
     height: 100vh;
-    transition: backfround-image 0.5s ease-in-out;
+    transition: background-image 0.5s ease-in-out;
     background-color: #3fa5e5;
 }
 
@@ -56,7 +56,7 @@ body {
     text-align: center;
 }
 
-#links, #weather, #apiData, #notes {
+#links, #weather, #apiData, #notes, #background-img { /* Added background-img section styling */
     margin-bottom: 20px;
 }
 
@@ -100,4 +100,32 @@ body {
 
 #randomBackgroundBtn i {
     margin-right: 1em;
+}
+
+/* Styling for the search input and change background button */
+#background-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Space between input and button */
+}
+
+#searchInput {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px; /* Adjust width as needed */
+}
+
+#changeBackgroundBtn {
+    padding: 8px 16px;
+    background-color: #007bff; /* Example button color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#changeBackgroundBtn:hover {
+    background-color: #0056b3; /* Darker color on hover */
 }
