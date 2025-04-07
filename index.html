@@ -61,19 +61,28 @@
                 <textarea id="noteText"></textarea>
             </section>
 
-            <section id="background-img">
-                <input type="text" id="searchInput" placeholder="Sök efter ett tema...">
-                <button id="changeBackgroundBtn">Ändra Bakgrund</button>
-                <button id="randomBackgroundBtn"><i class="fas fa-arrows-rotate"></i>Slumpa ny backgrundbild</button>
+            <section id="background-img-collapsible">
+                <button id="randomBackgroundBtn">
+                    <i class="fas fa-arrows-rotate"></i> Slumpa Bakgrund
+                </button>
+
+                <button id="toggleSearchSelector">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+
+                <div id="searchSelectorContent" style="display: none;">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Sök efter ett tema...">
+                        <button id="changeBackgroundBtn">Sök</button>
+                    </div>
+                </div>
             </section>
 
             <footer>
-
                 <p>&copy; <span id="current-year"></span> José Raúl Tenza Ramírez
                     <br>
                     All rights reserved
                 </p>
-        
             </footer>
     </main>
 </body>
