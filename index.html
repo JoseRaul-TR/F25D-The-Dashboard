@@ -10,9 +10,10 @@
 
     <script src="./JS/time-date.js" defer></script>
     <script src="./JS/heading-config.js" defer></script>
+    <script src="./JS/links-widget.js" defer></script>
     <script src="./Js/background-img.js" defer></script>
 
-    <title>Dashboard</title>
+    <title id="myTitle">Dashboard</title>
 </head>
 <body>
 
@@ -25,9 +26,10 @@
     </header>
 
     <main id="dashboard">
-        <section id="title">
-            <h1 id="myTitle">Min Dashboard</h1>
-            <i id="headingConfigWheel" class="fa-solid fa-gear" style="cursor: pointer;"></i>
+
+        <section id="titleSection">
+            <h1 id="h1Title">Min Dashboard</h1>
+            <i id="headingConfigWheel" class="fa-solid fa-gear"></i>
 
             <div id="headingConfig" style="display: none;">
                 <input type="text" id="newTitle" placeholder="Ange ny rubriktext">
@@ -35,48 +37,49 @@
             </div>
         </section>
 
-        <section id="links">
-            <h2>Snabblänkar</h2>
-            <ul id="linkList">
-            </ul>
-            <div id="addLinkForm">
-                <input type="text" id="linkTitle" placeholder="Länkens Titel">
-                <input type="url" id="linkUrl" placeholder="Länkens URL">
-                <button id="addLinkButton">Lägg till länk</button>
+        <section id="widgets">
+            <div id="links">
+                <h2>Snabblänkar</h2>
+                <ul id="linkList">
+                </ul>
+                <div id="addLinkSign">+</div>
+                <form id="addLinkInputs">
+                    <input type="text" id="linkTitle" placeholder="Länkens Titel">
+                    <input type="url" id="linkUrl" placeholder="Länkens URL">
+                    <button id="addLinkButton">Lägg till länk</button>
+                </form>
+            </div>
+
+            <div id="weather">
+                <h2>Väder</h2>
+                <div id="weatherData"></div>
+            </div>
+
+            <div id="apiData">
+                <h2>API Data</h2>
+                <div id="apiContent"></div>
+            </div>
+
+            <div id="notes">
+                <h2>Anteckningar</h2>
+                <textarea id="noteText"></textarea>
             </div>
         </section>
 
-        <section id="weather">
-            <h2>Väder</h2>
-                <div id="weatherData"></div>
-            </section>
+        <section id="background-img">
+            <button id="randomBackgroundBtn">
+                <i class="fas fa-arrows-rotate"></i> Slumpmässig bakgrund
+            </button>
 
-            <section id="apiData">
-                <h2>API Data</h2>
-                <div id="apiContent"></div>
-            </section>
+            <p>eller</p>
 
-            <section id="notes">
-                <h2>Anteckningar</h2>
-                <textarea id="noteText"></textarea>
-            </section>
-
-            <section id="background-img-collapsible">
-                <button id="randomBackgroundBtn">
-                    <i class="fas fa-arrows-rotate"></i> Slumpa Bakgrund
-                </button>
-
-                <button id="toggleSearchSelector">
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-
-                <div id="searchSelectorContent" style="display: none;">
-                    <div class="search-container">
-                        <input type="text" id="searchInput" placeholder="Sök efter ett tema...">
-                        <button id="changeBackgroundBtn">Sök</button>
-                    </div>
+            <div id="searchSelectorContent">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Sök efter ett tema...">
+                    <button id="changeBackgroundBtn">Sök</button>
                 </div>
-            </section>
+            </div>
+        </section>
 
             <footer>
                 <p>&copy; <span id="current-year"></span> José Raúl Tenza Ramírez

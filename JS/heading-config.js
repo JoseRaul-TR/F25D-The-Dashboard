@@ -1,23 +1,50 @@
-function changeHeading () {
+// Fuction to change both <title> and <h1>
+function changeHeading() {
     let newTitleText = document.getElementById('newTitle').value;
-    let title = document.getElementById('myTitle');
+    let titleElement = document.getElementById('myTitle');
+    let h1Element = document.getElementById('h1Title');
 
-    title.textContent = newHeadingText;
+    if (titleElement) {
+        titleElement.textContent = newTitleText;
+        localStorage.setItem('dashboardTitle', newTitleText);
+    }
+    if (h1Element) {
+        h1Element.textContent = newTitleText;
+        localStorage.setItem('dashboardH1Title', newTitleText);
+    }
 }
 
 document.getElementById('headingConfigWheel').addEventListener('click', function() {
     let config = document.getElementById('headingConfig');
 
-    if (controls.style.display === 'none' || controls.style.display === '') {
-        controls.style.display === 'block'; //Show the config controls
+    if (config.style.display === 'none' || config.style.display === '') {
+        config.style.display = 'block';
     } else {
-        controls.style.display === 'none'; // Hide controls by default
+        config.style.display = 'none';
     }
-})
+});
 
 document.getElementById('changeTitleBtn').addEventListener('click', () => {
     changeHeading();
-})
+    document.getElementById('headingConfig').style.display = 'none'; //Hide headingConfig after title change
+});
 
-/* Notes:
-– Seguir trabajando en codigo para editar título y reuda configuración */
+// Load titles from localStorage
+window.onload = function() {
+    let savedTitle = localStorage.getItem('dashboardTitle');
+    let savedH1Title = localStorage.getItem('dashboardH1Title');
+
+    if (savedTitle) {
+        let titleElement = document.getElementById('myTitle');
+        if (titleElement) {
+            titleElement.textContent = savedTitle;
+        }
+    }
+
+    if (savedH1Title) {
+        let h1Element = document.getElementById('h1Title');
+        if (h1Element) {
+            h1Element.textContent = savedH1Title;
+        }
+    }
+};

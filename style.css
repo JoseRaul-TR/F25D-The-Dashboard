@@ -7,10 +7,14 @@
 body {
     font-family: sans-serif;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     transition: background-image 0.5s ease-in-out;
     background-color: #3fa5e5;
+    display: flex;
+    flex-direction: column;
 }
+
+/* ––––––––– Time and date bar ––––––––– */
 
 #topBar {
     text-align: center;
@@ -48,55 +52,207 @@ body {
     color: #121212;
 }
 
+/* ––––––––– Dashbord title ––––––––– */
+
 #dashboard {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
 }
 
-#dashboardTitle {
-    text-align: center;
+#titleSection {
+    display: flex;
+    justify-content: center;
+    margin: 2em auto 1em auto;
 }
 
-#links, #weather, #apiData, #notes {
+#titleSection h1,
+#titleSection i {
+    font-size: 3rem;
+}
+
+#titleSection i {
+    margin-left: 1rem;
+    font-size: 2.5rem;
+    cursor: pointer;
+    color: #ccc;
+}
+
+#titleSection i:hover {
+    color: #121212;
+}
+
+/* ––––––––– Widgets container ––––––––– */
+
+#widgets {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 100%;
     margin-bottom: 20px;
 }
 
-#linkList {
+#links,
+#weather,
+#apiData,
+#notes {
+    background: #ffffff70;
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    min-width: 300px;
+    flex: 1;
+}
+
+#links h2,
+#weather h2,
+#apiData h2,
+#notes h2 {
+    text-align: center;
+}
+
+/* ––––––––– Widget Links ––––––––– */
+
+#links {
+    position: relative;
+}
+
+#links ul {
     list-style: none;
     padding: 0;
+    margin-bottom: 40px; /* Make space for the '+' button */
 }
 
-#addLinkForm {
+#links ul li {
     display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
 }
 
-#addLinkForm input {
-    margin-right: 10px;
+#links ul li:last-child {
+    border-bottom: none;
 }
+
+#links ul li img {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+#links ul li a {
+    text-decoration: none;
+    color: #333;
+    flex-grow: 1;
+}
+
+#links ul li button {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+#addLinkSign {
+    position: absolute;
+    left: 10px; /* Adjust as needed */
+    bottom: 10px; /* Adjust as needed */
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Make it circular */
+    width: 30px; /* Adjust size */
+    height: 30px; /* Adjust size */
+    font-size: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10; /* Ensure it's above other content */
+    transition: transform 0.3s ease;
+}
+
+#addLinkSign:hover {
+    transform: scale(1.1);
+}
+
+#addLinkInputs {
+    position: absolute;
+    left: 10px;
+    bottom: 45px; /* Adjust position above the '+' sign */
+    background: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    display: none; /* Hidden by default */
+    z-index: 9; /* Ensure it's below the '+' sign if expanded */
+}
+
+#addLinkInputs input[type="text"],
+#addLinkInputs input[type="url"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px; /* Adjust input width */
+}
+
+#addLinkInputs button {
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#addLinkInputs button:hover {
+    background-color: #1e7e34;
+}
+
+/* ––––––––– Weather Widget –––––––––*/
+
+/* ––––––––– API Data? ––––––––– */
+
+/* ––––––––– Notes Widget ––––––––– */
 
 #noteText {
     width: 100%;
     height: 150px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: transparent;
+    color: #121212;
 }
 
-#background-img-collapsible {
-    position: fixed;
-    bottom: 1em;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #ffffff70;
-    backdrop-filter: blur(15px);
-    padding: 1em;
-    border-radius: 10px;
+/* ––––––––– Background Widget ––––––––– */
+
+#background-img {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    text-align: center;
+    width: 40%;
+    background: #ffffff70;
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
 #toggleSearchSelector {
     background: transparent;
     border: none;
-    font-size: 1.5em; /* Adjust icon size */
+    font-size: 1.5em;
     color: #e9e9e9;
     cursor: pointer;
 }
@@ -127,6 +283,7 @@ body {
     font-size: 1em;
     color: #e9e9e9;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 #randomBackgroundBtn i {
@@ -156,5 +313,17 @@ body {
     background-color: #0056b3;
 }
 
-/* Notes:
-– Mejorar estilo background selector */
+/* ––––––––– Footer ––––––––– */
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    color: #f3f3f3;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+}

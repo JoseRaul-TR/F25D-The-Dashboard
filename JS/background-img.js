@@ -74,22 +74,6 @@ document.getElementById('randomBackgroundBtn').addEventListener('click', () => {
     }
 });
 
-const toggleSearchButton = document.getElementById('toggleSearchSelector');
-const searchSelectorContent = document.getElementById('searchSelectorContent');
-const toggleSearchIcon = toggleSearchButton.querySelector('i'); // Get the icon element
-
-toggleSearchButton.addEventListener('click', () => {
-    if (searchSelectorContent.style.display === 'none') {
-        searchSelectorContent.style.display = 'block';
-        toggleSearchIcon.classList.remove('fa-chevron-down'); // Change icon to up arrow
-        toggleSearchIcon.classList.add('fa-chevron-up');
-    } else {
-        searchSelectorContent.style.display = 'none';
-        toggleSearchIcon.classList.remove('fa-chevron-up'); // Change icon back to down arrow
-        toggleSearchIcon.classList.add('fa-chevron-down');
-    }
-});
-
 // Function to load the last background image from localStorage on page load
 function loadLastBackgroundImage() {
     const lastImageUrl = localStorage.getItem('lastBackgroundImage');
