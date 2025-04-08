@@ -32,8 +32,9 @@
             <i id="headingConfigWheel" class="fa-solid fa-gear"></i>
 
             <div id="headingConfig" style="display: none;">
-                <input type="text" id="newTitle" placeholder="Ange ny rubriktext">
-                <button id="changeTitleBtn">Ändra rubrik</button>
+                <input type="text" id="newTitle" placeholder="Ny Titel">
+                <input type="color" id="titleColorPicker" value="">
+                <button id="changeTitleBtn">Ändra Titel</button>
             </div>
         </section>
 
@@ -42,12 +43,14 @@
                 <h2>Snabblänkar</h2>
                 <ul id="linkList">
                 </ul>
-                <div id="addLinkSign">+</div>
-                <form id="addLinkInputs">
-                    <input type="text" id="linkTitle" placeholder="Länkens Titel">
-                    <input type="url" id="linkUrl" placeholder="Länkens URL">
-                    <button id="addLinkButton">Lägg till länk</button>
-                </form>
+                <div id="addLinkContainer">
+                    <span id="addLinkSign">+</span>
+                    <form id="addLinkInputs">
+                        <input type="text" id="linkTitle" placeholder="Länk titel">
+                        <input type="url" id="linkUrl" placeholder="Länk url">
+                        <button id="addLinkButton">Spara</button>
+                    </form>
+                </div>
             </div>
 
             <div id="weather">

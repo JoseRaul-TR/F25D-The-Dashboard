@@ -101,7 +101,7 @@ body {
     background: #ffffff70;
     backdrop-filter: blur(15px);
     border-radius: 10px;
-    padding: 20px;
+    padding: 15px;
     margin: 10px;
     min-width: 300px;
     flex: 1;
@@ -112,18 +112,25 @@ body {
 #apiData h2,
 #notes h2 {
     text-align: center;
+    color: #25272a;
+    padding-bottom: 1rem;
 }
 
 /* ––––––––– Widget Links ––––––––– */
 
 #links {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
 }
 
 #links ul {
     list-style: none;
     padding: 0;
-    margin-bottom: 40px; /* Make space for the '+' button */
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: 200px;
 }
 
 #links ul li {
@@ -132,6 +139,7 @@ body {
     margin-bottom: 8px;
     padding: 8px;
     border-bottom: 1px solid #eee;
+    position: relative; /* For positioning the buttons on hover */
 }
 
 #links ul li:last-child {
@@ -150,51 +158,77 @@ body {
     flex-grow: 1;
 }
 
-#links ul li button {
+#links ul li button.edit-btn,
+#links ul li button.delete-btn {
     background: none;
     border: none;
-    color: #dc3545;
     cursor: pointer;
-    margin-left: 8px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.2s ease-in-out;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#links ul li button.edit-btn {
+    color: #c2dbf6; /* Example edit button color */
+    right: 30px; /* Adjust position */
+}
+
+#links ul li button.delete-btn {
+    color: #c2dbf6;
+    right: 0; /* Adjust position */
+}
+
+#links ul li:hover button.edit-btn,
+#links ul li:hover button.delete-btn {
+    opacity: 1; /* Show on hover */
+    transition: all 0.2s ease;
+}
+
+#links ul li button.edit-btn:hover,
+#links ul li button.delete-btn:hover {
+    color: tomato;
+}
+
+#addLinkContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
 }
 
 #addLinkSign {
-    position: absolute;
-    left: 10px; /* Adjust as needed */
-    bottom: 10px; /* Adjust as needed */
-    background-color: #28a745;
     color: white;
     border: none;
-    border-radius: 50%; /* Make it circular */
-    width: 30px; /* Adjust size */
-    height: 30px; /* Adjust size */
     font-size: 1.5em;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
     cursor: pointer;
-    z-index: 10; /* Ensure it's above other content */
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-in-out; /* Added transition for rotation */
+    width: 30px;
+    height: 30px;
 }
 
 #addLinkSign:hover {
     transform: scale(1.1);
 }
 
+#addLinkSign.open {
+    transform: rotate(45deg); /* Rotate '+' to make it look like an 'x' */
+}
+
 #addLinkInputs {
-    position: absolute;
-    left: 10px;
-    bottom: 45px; /* Adjust position above the '+' sign */
-    background: #f8f9fa;
     color: #495057;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    padding: 10px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
     display: none; /* Hidden by default */
-    z-index: 9; /* Ensure it's below the '+' sign if expanded */
+    align-items: center; /* Align items horizontally */
+    gap: 8px;
+    flex-grow: 1;
+    height: 30px;
+    overflow-x: auto;
+    min-width: 0;
 }
 
 #addLinkInputs input[type="text"],
@@ -202,20 +236,24 @@ body {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 200px; /* Adjust input width */
+    flex-grow: 1;
+    min-width: 50px;
+    height: 100%;
 }
 
 #addLinkInputs button {
     padding: 8px 16px;
-    background-color: #28a745;
+    background-color: #007bff; /* Changed to a more generic 'add/update' color */
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    height: 100%;
+    flex-shrink: 0;
 }
 
 #addLinkInputs button:hover {
-    background-color: #1e7e34;
+    background-color: #0056b3;
 }
 
 /* ––––––––– Weather Widget –––––––––*/
@@ -327,3 +365,7 @@ footer {
 footer p {
     margin: 0;
 }
+
+/* Notes:
+– scroll bar covers delete i, to fix
+– adjust better add links sign and deployable */

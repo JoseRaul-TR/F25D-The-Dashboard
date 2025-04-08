@@ -1,4 +1,4 @@
-// Fuction to change both <title> and <h1>
+// Fuction to change text both in <title> and in <h1>
 function changeHeading() {
     let newTitleText = document.getElementById('newTitle').value;
     let titleElement = document.getElementById('myTitle');
@@ -11,6 +11,16 @@ function changeHeading() {
     if (h1Element) {
         h1Element.textContent = newTitleText;
         localStorage.setItem('dashboardH1Title', newTitleText);
+    }
+}
+
+// Function to handle title color change
+function changeTitleColor(event) {
+    const newColor = event.target.value;
+    const h1Element = document.getElementById('h1Title');
+    if (h1Element) {
+        h1Element.style.color = newColor;
+        localStorage.setItem('dashboardTitleColor', newColor); // Save new color in localStorage
     }
 }
 
@@ -29,10 +39,16 @@ document.getElementById('changeTitleBtn').addEventListener('click', () => {
     document.getElementById('headingConfig').style.display = 'none'; //Hide headingConfig after title change
 });
 
-// Load titles from localStorage
+const titleColorPicker = document.getElementById('titleColorPicker');
+if (titleColorPicker) {
+    titleColorPicker.addEventListener('input', changeTitleColor);
+}
+
+// Load titles and color from localStorage
 window.onload = function() {
     let savedTitle = localStorage.getItem('dashboardTitle');
     let savedH1Title = localStorage.getItem('dashboardH1Title');
+    let savedTitleColor = localStorage.getItem('dashboardTitleColor');
 
     if (savedTitle) {
         let titleElement = document.getElementById('myTitle');
@@ -46,5 +62,19 @@ window.onload = function() {
         if (h1Element) {
             h1Element.textContent = savedH1Title;
         }
+        if (savedTitleColor) {
+            h1Element.style.color = savedTitleColor;
+        }
+    } else if (savedTitleColor) {
+        // Apply color even if H1 title wasn't saved (might happen if color was set before H1 was introduced)
+        let h1Element = document.getElementById('h1Title');
+        if (h1Element) {
+            h1Element.style.color = savedTitleColor;
+        }
+    }
+
+    // Set initial value of color picker if a color is saved
+    if (titleColorPicker && savedTitleColor) {
+        titleColorPicker.value = savedTitleColor;
     }
 };

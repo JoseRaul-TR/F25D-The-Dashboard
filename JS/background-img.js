@@ -1,4 +1,4 @@
-const UnsplashApiKey = ''; // <–– Fill in Unsplash API key before test!
+const UnsplashApiKey = ''; // <–– Fill in Unsplash API key before test! **************
 
 // Function to fetch photo from Unsplash API
 async function fetchUnsplashPhoto(query = '') {
