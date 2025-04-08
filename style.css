@@ -96,7 +96,7 @@ body {
 
 #links,
 #weather,
-#apiData,
+#policeEvents,
 #notes {
     background: #ffffff70;
     backdrop-filter: blur(15px);
@@ -105,15 +105,19 @@ body {
     margin: 10px;
     min-width: 300px;
     flex: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
 #links h2,
 #weather h2,
-#apiData h2,
+#policeEvents h2,
 #notes h2 {
     text-align: center;
     color: #25272a;
     padding-bottom: 1rem;
+    font-size: 1,5em;
 }
 
 /* ––––––––– Widget Links ––––––––– */
@@ -131,6 +135,7 @@ body {
     flex-grow: 1;
     overflow-y: auto;
     max-height: 200px;
+    padding-right: 10px;
 }
 
 #links ul li {
@@ -258,12 +263,161 @@ body {
 
 /* ––––––––– Weather Widget –––––––––*/
 
-/* ––––––––– API Data? ––––––––– */
+#weatherWidget {
+    background-color: #e0f7fa;
+    border: 1px solid #b2ebf2;
+    border-radius: 8px;
+    padding: 15px;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+#weatherWidget h2 {
+    color: #00838f;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+#currentWeather {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#temperature {
+    font-size: 2em;
+    font-weight: bold;
+    color: #00acc1;
+}
+
+#description {
+    color: #4dd0e1;
+    margin-bottom: 10px;
+}
+
+#weatherIcon {
+    font-size: 2.5em;
+}
+
+#locationControls button {
+    margin: 5px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #f8f8f8;
+}
+
+#locationControls button:hover {
+    background-color: #eee;
+}
+
+#customLocationInput input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+#weatherError {
+    margin-top: 10px;
+}
+
+/* ––––––––– Police Events Widget ––––––––– */
+
+#eventsContainer {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.eventCard {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.eventCard h3 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+
+.eventCard p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.eventCard a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#filterToggle {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#filterIcon {
+    font-size: 1.2em;
+    margin-right: 8px;
+}
+
+#eventsFilters {
+    display: none;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+}
+
+#flterForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+}
+
+#flterForm label {
+    margin-right: 5px;
+    font-weight: bold;
+    color: #444;
+}
+
+#flterForm select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex-grow: 1; /* Allows select boxes to take up available space */
+    max-width: 200px; /* Optional: set a maximum width */
+}
+
+#flterForm button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#flterForm button[type="submit"]:hover {
+    background-color: #45a049;
+}
 
 /* ––––––––– Notes Widget ––––––––– */
 
 #notes {
-    background: #ffffff70;
     backdrop-filter: blur(15px);
     border-radius: 10px;
     padding: 20px;
@@ -383,4 +537,6 @@ footer p {
 
 /* Notes:
 – scroll bar covers delete i, to fix
-– adjust better add links sign and deployable */
+– adjust better add links sign and deployable 
+– Improve Police events widget layout
+*/

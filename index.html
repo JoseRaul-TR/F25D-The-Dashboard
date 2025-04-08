@@ -10,7 +10,9 @@
 
     <script src="./JS/time-date.js" defer></script>
     <script src="./JS/heading-config.js" defer></script>
+    <script src="./JS/weather-widget.js" defer></script>
     <script src="./JS/links-widget.js" defer></script>
+    <script src="./JS/police-events-widget.js" defer></script>
     <script src="./JS/notes-widget.js" defer></script>
     <script src="./Js/background-img.js" defer></script>
 
@@ -55,13 +57,48 @@
             </div>
 
             <div id="weather">
-                <h2>Väder</h2>
-                <div id="weatherData"></div>
+                <h2>Väder nära dig</h2>
+                <div id="currentWeather">
+                    <div id="temperature"></div>
+                    <div id="description"></div>
+                    <div id="weatherIcon"></div>
+                </div>
+                <div id="locationControls">
+                    <button id="useGeolocation">Använd min plats</button>
+                    <div id="customLocationInput" style="display: none;">
+                        <input type="text" id="locationName" placeholder="Ange ort (t.ex. Karlstad)">
+                        <button id="fetchCustomWeather">Visa väder</button>
+                    </div>
+                    <button id="toggleCustomLocation">Anpassa ort</button>
+                </div>
+                <div id="forecast">
+                    </div>
+                <div id="details">
+                    </div>
+                <div id="weatherError" style="color: red;"></div>
             </div>
 
-            <div id="apiData">
-                <h2>API Data</h2>
-                <div id="apiContent"></div>
+            <div id="policeEvents">
+                <h2>Polis händelser</h2>
+                <div id="eventsContainer"></div>
+                <div id="filterToggle">
+                    <span id="filterIcon">&#9660;</span> <span id="filterLabel">Filtrera händelser</span>
+                </div>
+                <div id="eventsFilters">
+                    <form id="flterForm">
+                        <label for="eventTypeSelector">Händelsetyp:</label>
+                        <select id="eventTypeSelector" name="eventTypeSelector">
+                            <option value="">Alla typer</option>
+                        </select>
+            
+                        <label for="eventPlaceSelector">Plats:</label>
+                        <select id="eventPlaceSelector" name="eventPlaceSelector">
+                            <option value="">Alla platser</option>
+                        </select>
+            
+                        <button type="submit" id="filterEventSubmit">Filtrera</button>
+                    </form>
+                </div>
             </div>
 
             <div id="notes">
