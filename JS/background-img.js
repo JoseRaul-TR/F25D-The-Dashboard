@@ -1,9 +1,9 @@
-let UnsplashApiKey = null; // Store API key in a variable
+const UnsplashApiKey = ''; // <–– Fill in Unsplash API key before test!
 
 // Function to fetch photo from Unsplash API
 async function fetchUnsplashPhoto(query = '') {
     if (!UnsplashApiKey) {
-        alert("Please enter your Unsplash API key.");
+        alert("Please enter your Unsplash API key in the code.");
         return null;
     }
 
@@ -48,30 +48,16 @@ async function setBackgroundImage(query = '') {
     }
 }
 
-// Function to prompt for API key
-function promptForApiKey() {
-    UnsplashApiKey = prompt("Enter your Unsplash API key:");
-    if (!UnsplashApiKey) {
-        alert("API key is required.");
-        return false;
-    }
-    return true;
-}
-
 // Event listener for the search button
 document.getElementById('changeBackgroundBtn').addEventListener('click', () => {
-    if (promptForApiKey()) {
-        const searchInput = document.getElementById('searchInput');
-        const query = searchInput.value;
-        setBackgroundImage(query);
-    }
+    const searchInput = document.getElementById('searchInput');
+    const query = searchInput.value;
+    setBackgroundImage(query);
 });
 
 // Event listener for the random background button
 document.getElementById('randomBackgroundBtn').addEventListener('click', () => {
-    if (promptForApiKey()) {
-        setBackgroundImage();
-    }
+    setBackgroundImage();
 });
 
 // Function to load the last background image from localStorage on page load
