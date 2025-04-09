@@ -263,64 +263,36 @@ body {
 
 /* ––––––––– Weather Widget –––––––––*/
 
-#weatherWidget {
-    background-color: #e0f7fa;
-    border: 1px solid #b2ebf2;
-    border-radius: 8px;
+#weather {
+    border: 1px solid #ccc;
     padding: 15px;
-    font-family: sans-serif;
+    width: 300px;
     text-align: center;
 }
-
-#weatherWidget h2 {
-    color: #00838f;
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
 #currentWeather {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#temperature {
-    font-size: 2em;
-    font-weight: bold;
-    color: #00acc1;
-}
-
-#description {
-    color: #4dd0e1;
     margin-bottom: 10px;
 }
-
-#weatherIcon {
-    font-size: 2.5em;
-}
-
 #locationControls button {
-    margin: 5px;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: #f8f8f8;
-}
-
-#locationControls button:hover {
-    background-color: #eee;
-}
-
-#customLocationInput input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
     margin-right: 5px;
 }
-
-#weatherError {
+#customLocationInput {
     margin-top: 10px;
+}
+#forecast {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    overflow-x: auto; /* For potential horizontal scrolling */
+}
+.forecast-item {
+    border: 1px solid #eee;
+    padding: 10px;
+    text-align: center;
+}
+#details {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #555;
 }
 
 /* ––––––––– Police Events Widget ––––––––– */
@@ -534,9 +506,3 @@ footer {
 footer p {
     margin: 0;
 }
-
-/* Notes:
-– scroll bar covers delete i, to fix
-– adjust better add links sign and deployable 
-– Improve Police events widget layout
-*/

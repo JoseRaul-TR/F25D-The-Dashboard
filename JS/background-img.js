@@ -1,7 +1,7 @@
-const UnsplashApiKey = ''; // <–– Fill in Unsplash API key before test! **************
+const UnsplashApiKey = ''; // <–– Fill in Unsplash API key before test! ************** IMPORTANT!!!!
 
 // Function to fetch photo from Unsplash API
-async function fetchUnsplashPhoto(query = '') {
+async function fetchUnsplashApiPhoto(query = '') {
     if (!UnsplashApiKey) {
         alert("Please enter your Unsplash API key in the code.");
         return null;
@@ -33,7 +33,7 @@ async function fetchUnsplashPhoto(query = '') {
 
 // Function to set the background image
 async function setBackgroundImage(query = '') {
-    const imageUrl = await fetchUnsplashPhoto(query);
+    const imageUrl = await fetchUnsplashApiPhoto(query);
 
     if (imageUrl) {
         document.body.style.backgroundImage = `url('${imageUrl}')`;

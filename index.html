@@ -57,12 +57,19 @@
             </div>
 
             <div id="weather">
-                <h2>Väder nära dig</h2>
+                <h2>Väder</h2>
+                <div id="currentLocationInfo"></div>
+                <div id="todayText"></div>
                 <div id="currentWeather">
+                    <div id="weatherIcon"></div>
                     <div id="temperature"></div>
                     <div id="description"></div>
-                    <div id="weatherIcon"></div>
                 </div>
+                <div id="forecast">
+                </div>
+                <div id="details">
+                </div>
+                <div id="weatherError" style="color: red;"></div>
                 <div id="locationControls">
                     <button id="useGeolocation">Använd min plats</button>
                     <div id="customLocationInput" style="display: none;">
@@ -71,11 +78,6 @@
                     </div>
                     <button id="toggleCustomLocation">Anpassa ort</button>
                 </div>
-                <div id="forecast">
-                    </div>
-                <div id="details">
-                    </div>
-                <div id="weatherError" style="color: red;"></div>
             </div>
 
             <div id="policeEvents">
@@ -131,3 +133,10 @@
     </main>
 </body>
 </html>
+
+<!-- Notes:
+– scroll bar covers delete i, to fix
+– adjust better add links sign and deployable 
+– Improve Police events widget layout 
+– Improve weather widget layout
+– Add media query for dark theme and smaller screens -->

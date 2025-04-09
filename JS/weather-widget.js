@@ -1,137 +1,204 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const weatherWidget = document.getElementById('weather');
-    const temperatureDiv = document.getElementById('temperature');
-    const descriptionDiv = document.getElementById('description');
-    const weatherIconDiv = document.getElementById('weatherIcon');
-    const forecastDiv = document.getElementById('forecast');
-    const detailsDiv = document.getElementById('details');
-    const weatherErrorDiv = document.getElementById('weatherError');
+const openWeatherApiKey = ''; // <–– Fill in OpenWeather API key before test! ************** IMPORTANT!!!!
 
-    const useGeolocationButton = document.getElementById('useGeolocation');
-    const customLocationInputDiv = document.getElementById('customLocationInput');
-    const locationNameInput = document.getElementById('locationName');
-    const fetchCustomWeatherButton = document.getElementById('fetchCustomWeather');
-    const toggleCustomLocationButton = document.getElementById('toggleCustomLocation');
+const temperatureDiv = document.getElementById('temperature');
+const descriptionDiv = document.getElementById('description');
+const weatherIconDiv = document.getElementById('weatherIcon');
+const forecastDiv = document.getElementById('forecast');
+const detailsDiv = document.getElementById('details');
+const errorDiv = document.getElementById('weatherError');
+const useGeolocationButton = document.getElementById('useGeolocation');
+const customLocationInputDiv = document.getElementById('customLocationInput');
+const toggleCustomLocationButton = document.getElementById('toggleCustomLocation');
+const locationNameInput = document.getElementById('locationName');
+const fetchCustomWeatherButton = document.getElementById('fetchCustomWeather');
+const currentLocationInfoDiv = document.getElementById('currentLocationInfo');
+const todayTextDiv = document.getElementById('todayText');
 
-    let currentLatitude;
-    let currentLongitude;
+// Function to fetch weather data from OpenWeather API
+async function fetchOpenWeatherApiData(url) {
+    if (!openWeatherApiKey) {
+        alert("Please enter your OpenWeather API key in the code.");
+        return null;
+    }
 
-    function displayWeather(data) {
-        weatherErrorDiv.textContent = ''; // Clear any previous errors
-        if (data && data.properties && data.properties.timeseries && data.properties.timeseries.length > 0) {
-            const nowData = data.properties.timeseries[0].data.instant.details;
-            const nextHourForecast = data.properties.timeseries[0].data.next_1_hours ? data.properties.timeseries[0].data.next_1_hours.summary : null;
-
-            const temperature = nowData.air_temperature ? `${nowData.air_temperature}°C` : 'N/A';
-            const descriptionSymbol = nextHourForecast ? nextHourForecast.symbol_code : 'unknown';
-
-            temperatureDiv.textContent = temperature;
-            descriptionDiv.textContent = getWeatherDescription(descriptionSymbol); // Implement this function
-            weatherIconDiv.textContent = getWeatherIcon(descriptionSymbol);     // Implement this function
-            // You can expand this to show more forecast data
-        } else {
-            weatherErrorDiv.textContent = 'Kunde inte läsa väderdata.';
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`HTTP error! Status: ${response.status} - ${errorData.message || response.statusText}`);
         }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching weather data from API:', error);
+        displayError("Något gick fel vid hämtning av väderdata.");
+        return null;
     }
+}
 
-    function getWeatherDescription(symbolCode) {
-        // Basic mapping - expand this based on Yr.No's symbol codes
-        const descriptions = {
-            clearsky_day: 'Klar himmel',
-            clearsky_night: 'Klar himmel',
-            partlycloudy_day: 'Delvis molnigt',
-            partlycloudy_night: 'Delvis molnigt',
-            cloudy: 'Molnigt',
-            rain_light: 'Lätt regn',
-            rain: 'Regn',
-            rain_heavy: 'Kraftigt regn',
-            snow_light: 'Lätt snö',
-            snow: 'Snö',
-            snow_heavy: 'Kraftig snö',
-            fog: 'Dimma'
-            // Add more as needed from Yr.No's documentation
-        };
-        return descriptions[symbolCode] || 'Okänt väder';
+// Function to display current weather
+function displayCurrentWeather(data) {
+    if (data && data.main && data.weather && data.weather.length > 0 && data.name && data.sys && data.sys.country) {
+        const temperatureCelsius = (data.main.temp - 273.15).toFixed(1); // Convert Kelvin to Celsius
+        const description = data.weather[0].description;
+        const iconCode = data.weather[0].icon;
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+        const cityName = data.name;
+        const countryCode = data.sys.country;
+
+        currentLocationInfoDiv.textContent = `${cityName}, ${countryCode}`;
+        todayTextDiv.textContent = 'Idag';
+        temperatureDiv.textContent = `${temperatureCelsius}°C`;
+        descriptionDiv.textContent = description.charAt(0).toUpperCase() + description.slice(1);
+        weatherIconDiv.innerHTML = `<img src="${iconUrl}" alt="${description}">`;
+        errorDiv.textContent = ''; // Clear any previous error messages
+    } else {
+        displayError("Kunde inte visa aktuell väderinformation.");
     }
+}
 
-    function getWeatherIcon(symbolCode) {
-        // Very basic text-based icons - replace with actual icon fonts or images
-        const icons = {
-            clearsky_day: '☀️',
-            clearsky_night: '🌙',
-            partlycloudy_day: '🌤️',
-            partlycloudy_night: '☁️',
-            cloudy: '☁️',
-            rain_light: '🌧️',
-            rain: '🌧️',
-            rain_heavy: '🌧️🌧️',
-            snow_light: '🌨️',
-            snow: '🌨️',
-            snow_heavy: '🌨️🌨️',
-            fog: '🌫️'
-            // Add more as needed
-        };
-        return icons[symbolCode] || '❓';
-    }
+// Function to display weather forecast
+function displayForecast(data) {
+    forecastDiv.innerHTML = ''; // Clear previous content
 
-    async function fetchWeatherByCoordinates(latitude, longitude) {
-        const yrNoForecastURL = `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${latitude}&lon=${longitude}`;
-        try {
-            const data = await fetchWeatherData(yrNoForecastURL);
-            displayWeather(data);
-        } catch (error) {
-            weatherErrorDiv.textContent = 'Kunde inte hämta väderdata för din plats.';
-            console.error(error);
-        }
-    }
+    if (data && data.list) {
+        const dailyForecast = {};
+        data.list.forEach(item => {
+            const date = new Date(item.dt * 1000).toLocaleDateString();
+            if (!dailyForecast[date]) {
+                dailyForecast[date] = [];
+            }
+            dailyForecast[date].push(item);
+        });
 
-    async function fetchWeatherByPlaceName(placeName) {
-        // Yr.No doesn't directly take place names in this compact forecast API.
-        // We'd need a geocoding service to get coordinates first.
-        // For simplicity in this basic example, we'll skip geocoding and just show an error.
+        const today = new Date().toLocaleDateString();
+        let forecastItemsHTML = '';
 
-        // A more complete solution would involve using a geocoding API
-        // (like Nominatim, Google Geocoding API, etc.) to convert the place name
-        // to latitude and longitude, and then call fetchWeatherByCoordinates.
+        for (const date in dailyForecast) {
+            if (date !== today) { // Exclude today's forecast
+                const dayData = dailyForecast[date];
+                const middayData = dayData.find(item => new Date(item.dt * 1000).getHours() >= 12 && new Date(item.dt * 1000).getHours() < 15) || dayData[0];
+                if (middayData) {
+                    const temp = (middayData.main.temp - 273.15).toFixed(1);
+                    const iconCode = middayData.weather[0].icon;
+                    const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+                    const dayOfWeek = new Date(middayData.dt * 1000).toLocaleDateString('sv-SE', { weekday: 'short' });
 
-        weatherErrorDiv.textContent = `Funktionalitet för att söka på ortnamn är inte implementerad i detta enkla exempel.`;
-    }
-
-    function handleGeolocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    currentLatitude = position.coords.latitude;
-                    currentLongitude = position.coords.longitude;
-                    fetchWeatherByCoordinates(currentLatitude, currentLongitude);
-                },
-                (error) => {
-                    weatherErrorDiv.textContent = `Kunde inte hämta din plats: ${error.message}`;
+                    forecastItemsHTML += `
+                        <div class="forecast-item">
+                            <strong>${dayOfWeek}</strong><br>
+                            <img src="${iconUrl}" alt="${middayData.weather[0].description}" style="width: 50px;"><br>
+                            ${temp}°C
+                        </div>
+                    `;
                 }
-            );
-        } else {
-            weatherErrorDiv.textContent = 'Din webbläsare stöder inte geolocation.';
+            }
         }
+        forecastDiv.innerHTML = forecastItemsHTML; // Populate the existing forecastDiv
+    } else {
+        console.warn("Ingen prognosdata tillgänglig.");
+        forecastDiv.textContent = 'Ingen prognos tillgänglig.';
+    }
+}
+
+// Function to display error messages
+function displayError(message) {
+    errorDiv.textContent = message;
+    temperatureDiv.textContent = '';
+    descriptionDiv.textContent = '';
+    weatherIconDiv.innerHTML = '';
+    forecastDiv.textContent = '';
+    detailsDiv.innerHTML = '';
+    currentLocationInfoDiv.textContent = '';
+    todayTextDiv.textContent = '';
+}
+
+// Function to get weather by coordinates
+async function getWeatherByCoords(latitude, longitude) {
+    const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openWeatherApiKey}&lang=sv`;
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${openWeatherApiKey}&lang=sv`;
+
+    const currentWeatherData = await fetchOpenWeatherApiData(currentWeatherUrl);
+    if (currentWeatherData) {
+        displayCurrentWeather(currentWeatherData);
+        localStorage.setItem('lastLocation', `${currentWeatherData.name}, ${currentWeatherData.sys.country}`); // Store location
     }
 
-    function toggleCustomLocationInput() {
-        customLocationInputDiv.style.display = customLocationInputDiv.style.display === 'none' ? 'block' : 'none';
+    const forecastData = await fetchOpenWeatherApiData(forecastUrl);
+    if (forecastData) {
+        displayForecast(forecastData);
+    }
+}
+
+// Function to get weather by city name
+async function getWeatherByCity(city) {
+    const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${openWeatherApiKey}&lang=sv`;
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${openWeatherApiKey}&lang=sv`;
+
+    const currentWeatherData = await fetchOpenWeatherApiData(currentWeatherUrl);
+    if (currentWeatherData) {
+        displayCurrentWeather(currentWeatherData);
+        localStorage.setItem('lastLocation', `${currentWeatherData.name}, ${currentWeatherData.sys.country}`); // Store location
     }
 
-    useGeolocationButton.addEventListener('click', handleGeolocation);
-    toggleCustomLocationButton.addEventListener('click', toggleCustomLocationInput);
-    fetchCustomWeatherButton.addEventListener('click', () => {
-        const locationName = locationNameInput.value.trim();
-        if (locationName) {
-            fetchWeatherByPlaceName(locationName);
-        } else {
-            weatherErrorDiv.textContent = 'Ange en ort.';
-        }
-    });
+    const forecastData = await fetchOpenWeatherApiData(forecastUrl);
+    if (forecastData) {
+        displayForecast(forecastData);
+    }
+}
 
-    // Initial load using geolocation
-    handleGeolocation();
+// Function to first load weather based on stored location, geolocation or ask location to user
+function loadWeatherOnStartup() {
+    const storedLocation = localStorage.getItem('lastLocation');
+    if (storedLocation) {
+        getWeatherByCity(storedLocation);
+    } else if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                getWeatherByCoords(position.coords.latitude, position.coords.longitude);
+            },
+            error => {
+                console.error("Fel vid hämtning av plats:", error);
+                alert("Kunde inte hämta din plats. Ange en ort manuellt.");
+                customLocationInputDiv.style.display = 'block'; // Show manual input
+            }
+        );
+    } else {
+        alert("Din webbläsare stöder inte geolokalisering. Ange en ort manuellt.");
+        customLocationInputDiv.style.display = 'block'; // Show manual input
+    }
+}
+
+// Event listener for using geolocation (manual button click)
+useGeolocationButton.addEventListener('click', () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                getWeatherByCoords(position.coords.latitude, position.coords.longitude);
+            },
+            error => {
+                console.error("Fel vid hämtning av plats:", error);
+                displayError("Kunde inte hämta din plats. Försök ange en ort manuellt.");
+            }
+        );
+    } else {
+        displayError("Din webbläsare stöder inte geolokalisering.");
+    }
 });
 
-/* Notes:
-– Keep working in code */
+// Event listener to toggle custom location input
+toggleCustomLocationButton.addEventListener('click', () => {
+    customLocationInputDiv.style.display = customLocationInputDiv.style.display === 'none' ? 'block' : 'none';
+});
+
+// Event listener for fetching weather for a custom location
+fetchCustomWeatherButton.addEventListener('click', () => {
+    const city = locationNameInput.value.trim();
+    if (city) {
+        getWeatherByCity(city);
+    } else {
+        displayError("Ange en ort.");
+    }
+});
+
+// Initial load
+loadWeatherOnStartup();

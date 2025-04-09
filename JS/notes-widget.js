@@ -13,4 +13,3 @@ window.onload = function() {
 noteTextarea.addEventListener('input', function() {
     localStorage.setItem(dashboardNote, this.value);
 });
-
