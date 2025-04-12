@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./Style.css">
 
     <script src="./JS/time-date.js" defer></script>
     <script src="./JS/heading-config.js" defer></script>
@@ -43,63 +46,70 @@
 
         <section id="widgets">
             <div id="links">
-                <h2>Snabblänkar</h2>
-                <ul id="linkList">
-                </ul>
+                <h2>Mina länkar</h2>
+
+                <ul id="linkList"></ul>
+
                 <div id="addLinkContainer">
-                    <span id="addLinkSign">+</span>
-                    <form id="addLinkInputs">
+                    <div id="addLinkSign"><i class="fa-solid fa-plus"></i></div>
+                    <div id="addLinkInputs">
                         <input type="text" id="linkTitle" placeholder="Länk titel">
                         <input type="url" id="linkUrl" placeholder="Länk url">
-                        <button id="addLinkButton">Spara</button>
-                    </form>
+                        <button id="addLinkButton">Lägg till</button>
+                    </div>
                 </div>
             </div>
 
             <div id="weather">
                 <h2>Väder</h2>
-                <div id="currentLocationInfo"></div>
-                <div id="todayText"></div>
+                <div id="locationInfo"></div>
+                <h3>Idag</h3>
                 <div id="currentWeather">
-                    <div id="weatherIcon"></div>
-                    <div id="temperature"></div>
-                    <div id="description"></div>
-                </div>
-                <div id="forecast">
-                </div>
-                <div id="details">
-                </div>
-                <div id="weatherError" style="color: red;"></div>
-                <div id="locationControls">
-                    <button id="useGeolocation">Använd min plats</button>
-                    <div id="customLocationInput" style="display: none;">
-                        <input type="text" id="locationName" placeholder="Ange ort (t.ex. Karlstad)">
-                        <button id="fetchCustomWeather">Visa väder</button>
+                    <div id="weatherIconAndDetails">
+                        <div id="weatherIcon"></div>
+                        <div id="currentWeatherDetails">
+                            <div id="temperature"></div>
+                            <div id="description"></div>
+                        </div>
                     </div>
-                    <button id="toggleCustomLocation">Anpassa ort</button>
                 </div>
+
+                <h3>Kommande dagar</h3>
+                <div id="forecast"></div>
+
+                <div id="locationConfig">
+                    <div id="configWheel"><i class="fas fa-cog"></i></div>
+                    <div id="locationControls">
+                        <button id="useGeolocation">Använd nuvarande plats</button>
+                        <input type="text" id="locationName" placeholder="Ange ort (t.ex. Stockholm)">
+                        <button id="fetchCustomWeather">Ok</button>
+                    </div>
+                </div>
+
+                <div id="weatherError" style="color: red;"></div>
+
             </div>
 
             <div id="policeEvents">
-                <h2>Polis händelser</h2>
+                <h2>Senaste polishändelserna</h2>
                 <div id="eventsContainer"></div>
-                <div id="filterToggle">
-                    <span id="filterIcon">&#9660;</span> <span id="filterLabel">Filtrera händelser</span>
-                </div>
-                <div id="eventsFilters">
-                    <form id="flterForm">
-                        <label for="eventTypeSelector">Händelsetyp:</label>
-                        <select id="eventTypeSelector" name="eventTypeSelector">
-                            <option value="">Alla typer</option>
-                        </select>
-            
-                        <label for="eventPlaceSelector">Plats:</label>
-                        <select id="eventPlaceSelector" name="eventPlaceSelector">
-                            <option value="">Alla platser</option>
-                        </select>
-            
-                        <button type="submit" id="filterEventSubmit">Filtrera</button>
-                    </form>
+                <div id="filterArea">
+                    <div id="filterToggle"><i class="fas fa-filter"></i></div>
+                    <div id="eventsFilters">
+                        <form id="flterForm">
+                            <label for="eventTypeSelector">Händelsetyp:</label>
+                            <select id="eventTypeSelector" name="eventTypeSelector">
+                                <option value="">Alla typer</option>
+                            </select>
+                
+                            <label for="eventPlaceSelector">Plats:</label>
+                            <select id="eventPlaceSelector" name="eventPlaceSelector">
+                                <option value="">Alla platser</option>
+                            </select>
+                
+                            <button type="submit" id="filterEventSubmit">Filtrera</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -135,8 +145,7 @@
 </html>
 
 <!-- Notes:
-– scroll bar covers delete i, to fix
-– adjust better add links sign and deployable 
-– Improve Police events widget layout 
-– Improve weather widget layout
-– Add media query for dark theme and smaller screens -->
+– Add media query for dark theme and smaller screens
+- Links widget editar no funciona y +
+- weather location don't work on second click
+-mirar donde guarda notas-->

@@ -1,3 +1,25 @@
+/* CSS Variables */
+:root {
+    --border-radius: 8px;
+    --button-light-bg: #ffffffd2;
+    --button-dark-bg: #000000d2;
+    --button-light-text: #000;
+    --button-dark-text: #fff;
+
+    --light-widget-bg: #ffffff39;
+    --dark-widget-bg: #00000039;
+    --light-widget-element: #ffffff7e;
+    --dark-widget-element: #0000007e;
+    --light-text-color: #1f1f1f;
+    --dark-text-color: #f1f1f1;
+    --light-hover: #fff;
+    --dark-hover: #000;
+    --backdrop-filter: blur(15px);
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* CSS Style */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,11 +27,11 @@
 }
 
 body {
-    font-family: sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     width: 100vw;
-    min-height: 100vh;
-    transition: background-image 0.5s ease-in-out;
-    background-color: #3fa5e5;
+    height: 100%;
+    background: #7e7e7e;
+    transition: all 0.3s linear;
     display: flex;
     flex-direction: column;
 }
@@ -18,11 +40,9 @@ body {
 
 #topBar {
     text-align: center;
-    margin: 0 auto;
-    padding: 10px;
+    margin: 1em auto;
     width: 100%;
-    height: 40px;
-    background: transparent;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,26 +50,27 @@ body {
 
 #timeDate {
     width: 25%;
+    min-width: 140px;
     height: auto;
-    padding: .2em 1em;
-    border-radius: 20px;
-    background: #ffffff70;
-    backdrop-filter: blur(15px);
+    padding: .5em 1em;
+    border-radius: var(--border-radius);
+    color: var(--light-text-color);
+    background: var(--light-widget-bg);
+    box-shadow: var(--box-shadow);
+    backdrop-filter: var(--backdrop-filter);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 #time {
     font-weight: bold;
-    color: #000000;
-    margin-right: 1rem;
+    margin-right: .5rem;
 }
 
 #date {
     font-weight: lighter;
-    color: #121212;
 }
 
 /* ––––––––– Dashbord title ––––––––– */
@@ -59,30 +80,71 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
 }
 
 #titleSection {
     display: flex;
     justify-content: center;
-    margin: 2em auto 1em auto;
+    align-items: center;
+    margin: 1em auto;
+    gap: 15px;
 }
 
-#titleSection h1,
-#titleSection i {
-    font-size: 3rem;
+#titleSection:hover i {
+    opacity: 1;
+}
+
+#titleSection h1 {
+    font-size: 2rem;
 }
 
 #titleSection i {
+    opacity: 0;
     margin-left: 1rem;
-    font-size: 2.5rem;
+    font-size: 2rem;
     cursor: pointer;
-    color: #ccc;
+    color: var(--light-widget-element);
 }
 
 #titleSection i:hover {
-    color: #121212;
+    transform: scale(1.2);
+    color: var(--light-hover);}
+
+#headingConfig {
+    position: absolute;
+    top: 130px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--light-widget-bg);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    backdrop-filter: var(--backdrop-filter);
+    z-index: 10;
+    display: none;
+    flex-direction: column;
+    gap: 5px;
 }
+
+#headingConfig input,
+#headingConfig button {
+    border-radius: var(--border-radius);
+    padding: 5px;
+    border: none;
+}
+
+#headingConfig button {
+    background-color: var(--button-light-bg);
+    color: var(--button-light-text);
+    cursor: pointer;
+}
+
+#headingConfig button:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
 
 /* ––––––––– Widgets container ––––––––– */
 
@@ -91,23 +153,28 @@ body {
     justify-content: space-evenly;
     flex-wrap: wrap;
     width: 100%;
-    margin-bottom: 20px;
+    padding: 10px;
+    gap: 10px;
+    flex-grow: 1;
+    overflow: auto;
 }
 
 #links,
 #weather,
 #policeEvents,
 #notes {
-    background: #ffffff70;
-    backdrop-filter: blur(15px);
-    border-radius: 10px;
-    padding: 15px;
-    margin: 10px;
-    min-width: 300px;
-    flex: 1;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: var(--light-widget-bg);
+    backdrop-filter: var(--backdrop-filter);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    margin: 0;
+    height: 450px;
+    min-width: 280px;
+    flex: 1 1 280px;
+    box-shadow: var(--box-shadow);
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 #links h2,
@@ -115,52 +182,52 @@ body {
 #policeEvents h2,
 #notes h2 {
     text-align: center;
-    color: #25272a;
-    padding-bottom: 1rem;
-    font-size: 1,5em;
+    color: var(--light-text-color);
+    padding-bottom: 0.5rem;
+    font-size: 1.2em;
+    margin-top: 0;
 }
 
 /* ––––––––– Widget Links ––––––––– */
 
-#links {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 300px;
-}
-
 #links ul {
     list-style: none;
     padding: 0;
-    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     overflow-y: auto;
-    max-height: 200px;
-    padding-right: 10px;
+    padding-right: 5px;
+    margin-bottom: 5px;
+    flex-grow: 1;
 }
 
 #links ul li {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
-    padding: 8px;
-    border-bottom: 1px solid #eee;
-    position: relative; /* For positioning the buttons on hover */
+    position: relative;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    background-color: var(--light-widget-element);
+    font-size: 0.9em;
+    height: 50px;
 }
 
-#links ul li:last-child {
-    border-bottom: none;
+#links ul li:hover {
+    box-shadow: var(--box-shadow);
 }
 
 #links ul li img {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
 }
 
 #links ul li a {
     text-decoration: none;
-    color: #333;
+    color: var(--light-text-color);
     flex-grow: 1;
+    cursor: pointer;
 }
 
 #links ul li button.edit-btn,
@@ -168,57 +235,64 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    opacity: 0; /* Hidden by default */
-    transition: opacity 0.2s ease-in-out;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    font-size: 0.8em;
+    padding: 3px;
+    border-radius: var(--border-radius);
+    color: var(--light-text-color);
 }
 
 #links ul li button.edit-btn {
-    color: #c2dbf6; /* Example edit button color */
-    right: 30px; /* Adjust position */
+    right: 40px;
 }
 
 #links ul li button.delete-btn {
-    color: #c2dbf6;
-    right: 0; /* Adjust position */
+    right: 15px;
 }
 
 #links ul li:hover button.edit-btn,
 #links ul li:hover button.delete-btn {
-    opacity: 1; /* Show on hover */
-    transition: all 0.2s ease;
+    opacity: 1;
 }
 
-#links ul li button.edit-btn:hover,
+#links ul li button.edit-btn:hover {
+    color:#3498db;
+}
+
 #links ul li button.delete-btn:hover {
-    color: tomato;
+    color: #ff0000;
 }
 
 #addLinkContainer {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
     width: 100%;
+    box-sizing: border-box;
+    margin-top: auto;
 }
 
 #addLinkSign {
-    color: white;
-    border: none;
-    font-size: 1.5em;
+    color: var(--light-widget-element);
+    font-size: 1.2em;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
     cursor: pointer;
-    transition: transform 0.3s ease-in-out; /* Added transition for rotation */
-    width: 30px;
-    height: 30px;
+    transition: transform 0.3s ease-in-out;
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
 }
 
 #addLinkSign:hover {
-    transform: scale(1.1);
+    transform: scale(1.4);
+    color: var(--light-hover);
 }
 
 #addLinkSign.open {
@@ -226,270 +300,500 @@ body {
 }
 
 #addLinkInputs {
-    color: #495057;
-    display: none; /* Hidden by default */
-    align-items: center; /* Align items horizontally */
-    gap: 8px;
-    flex-grow: 1;
-    height: 30px;
-    overflow-x: auto;
-    min-width: 0;
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+#addLinkInputs.open {
+    display: flex;
 }
 
 #addLinkInputs input[type="text"],
 #addLinkInputs input[type="url"] {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    flex-grow: 1;
-    min-width: 50px;
-    height: 100%;
+    padding: 8px 10px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 0.9em;
+    height: auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #addLinkInputs button {
-    padding: 8px 16px;
-    background-color: #007bff; /* Changed to a more generic 'add/update' color */
-    color: white;
+    padding: 8px 12px;
+    background-color: var(--button-light-bg);
+    color: var(--button-light-text);
     border: none;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     cursor: pointer;
-    height: 100%;
+    font-size: 0.9em;
     flex-shrink: 0;
+    height: auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #addLinkInputs button:hover {
-    background-color: #0056b3;
+    background-color: var(--light-hover);
+    box-shadow: var(--box-shadow);
 }
+
 
 /* ––––––––– Weather Widget –––––––––*/
 
-#weather {
-    border: 1px solid #ccc;
-    padding: 15px;
-    width: 300px;
+#locationInfo {
+    font-size: 0.85em;
+    color: var(--light-text-color);
+    margin-bottom: 5px;
     text-align: center;
 }
+
 #currentWeather {
-    margin-bottom: 10px;
-}
-#locationControls button {
-    margin-right: 5px;
-}
-#customLocationInput {
-    margin-top: 10px;
-}
-#forecast {
-    margin-top: 15px;
+    margin-bottom: 5px;
     display: flex;
-    gap: 10px;
-    overflow-x: auto; /* For potential horizontal scrolling */
-}
-.forecast-item {
-    border: 1px solid #eee;
-    padding: 10px;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    width: 100%;
+    background-color:  var(--light-widget-element);
+    border-radius: var(--border-radius);
 }
-#details {
-    margin-top: 15px;
+
+#weather h3 {
+    text-align: center;
+    color: var(--light-text-color);
+    margin-bottom: 5px;
+    font-size: 1em;
+    font-weight: normal; /* Adjust as needed */
+}
+
+#weatherIconAndDetails {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+#weatherIcon {
+    width: auto;
+    height: auto;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#weatherIcon img {
+    max-width: 80px;
+    height: auto;
+}
+
+#currentWeatherDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+#temperature {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#description {
+    font-size: 1.1em;
+    color: var(--light-text-color);
+}
+
+#forecast {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 5px;
+    height: auto;
+}
+
+.forecast-item {
+    padding: 10px 0;
+    text-align: left;
+    background-color: var(--light-widget-element);
+    border-radius: var(--border-radius);
     font-size: 0.9em;
-    color: #555;
+    flex-shrink: 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+.forecast-day {
+    color: var(--light-text-color);
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.forecast-icon-details {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.forecast-icon {
+    width: 50%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    max-width: auto;
+    height: 60px;
+}
+
+.forecast-icon img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.forecast-temperature-description {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 10px;
+    box-sizing: border-box;
+    height: auto;
+}
+
+.forecast-temperature {
+    font-size: 1em;
+    color: var(--light-text-color);
+    margin-bottom: 2px;
+}
+
+.forecast-description {
+    font-size: 0.8em;
+    color: var(--light-text-color);
+    word-break: break-word; /* Prevent long words from breaking layout */
+}
+
+#locationConfig {
+    position: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#configWheel {
+    color: var(--light-widget-element);
+    font-size: 1.2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    width: 25px;
+    height: 25px;
+}
+
+#configWheel:hover {
+    transform: scale(1.4);
+    color: var(--light-hover);
+}
+
+#locationControls {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+#locationControls > button {
+    /* Style for the geolocation button (first row) */
+    padding: 8px 12px;
+    background-color: var(--button-light-bg);
+    color: var(--button-light-text);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#locationControls input[type="text"] {
+    padding: 10px 12px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 0.9em;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#locationControls #fetchCustomWeather {
+    padding: 8px 12px;
+    background-color: var(--button-light-bg);
+    color: var(--button-light-text);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#locationControls button:hover,
+#locationControls #fetchCustomWeather:hover {
+    background-color: var(--light-hover);
+    box-shadow: var(--box-shadow);
+}
+
+/* Initially hide the locationControls */
+#locationControls {
+    display: none;
+}
+
+/* Style when locationControls is visible */
+#locationConfig.controls-visible #locationControls {
+    display: flex;
 }
 
 /* ––––––––– Police Events Widget ––––––––– */
 
 #eventsContainer {
-    max-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     overflow-y: auto;
-    margin-bottom: 15px;
+    padding-right: 5px;
+    flex-grow: 1;
+
 }
 
 .eventCard {
-    background-color: #fff;
-    border: 1px solid #eee;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    background-color: var(--light-widget-element);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    font-size: 0.9em;
+    width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
 }
 
 .eventCard h3 {
-    color: #2c3e50;
-    margin-top: 0;
-    margin-bottom: 8px;
-    font-size: 1.1em;
+    padding: 0.2em 0 0.3em 0;
+    font-size: 1em;
+    color: var(--light-text-color);
 }
 
 .eventCard p {
-    margin: 5px 0;
-    color: #555;
+    padding: 0.2em 0;
+    color: var(--light-text-color-secondary);
     font-size: 0.9em;
 }
 
 .eventCard a {
-    color: #3498db;
+    color: var(--link-light-color);
     text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.eventCard a:hover {
     font-weight: bold;
 }
 
-#filterToggle {
-    cursor: pointer;
+#filterArea {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: auto;
+    padding-top: 5px;
 }
 
-#filterIcon {
+#filterToggle {
+    color: var(--light-widget-element);
     font-size: 1.2em;
-    margin-right: 8px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    width: 25px;
+    height: 25px;
+}
+
+#filterToggle:hover {
+    transform: scale(1.4);
+    color: var(--light-hover);
 }
 
 #eventsFilters {
     display: none;
-    padding: 15px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    border: 1px solid #e0e0e0;
-}
-
-#flterForm {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
+    flex-direction: column;
     align-items: center;
+    gap: 5px;
+    padding-top: 5px;
+    width: 100%;
 }
 
-#flterForm label {
-    margin-right: 5px;
-    font-weight: bold;
-    color: #444;
+#eventsFilters.open {
+    display: flex;
 }
 
-#flterForm select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    flex-grow: 1; /* Allows select boxes to take up available space */
-    max-width: 200px; /* Optional: set a maximum width */
+#eventsFilters label {
+    color: var(--light-text-color);
+    font-size: 0.8em;
+    margin-bottom: 2px;
 }
 
-#flterForm button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
+#eventsFilters select {
+    padding: 6px 8px;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    border-radius: var(--border-radius);
+    font-size: 0.8em;
+    background-color: var(--light-widget-element);
+    color: var(--light-text-color);
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 8px;
 }
 
-#flterForm button[type="submit"]:hover {
-    background-color: #45a049;
+#eventsFilters button {
+    padding: 8px 10px;
+    background-color: var(--button-light-bg);
+    color: var(--button-light-text);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.8em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#eventsFilters button:hover {
+    background-color: var(--light-hover);
+    box-shadow: var(--box-shadow);
 }
 
 /* ––––––––– Notes Widget ––––––––– */
 
-#notes {
-    backdrop-filter: blur(15px);
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px;
-    min-width: 300px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
 #noteTextarea {
     width: 100%;
     height: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 8px;
+    border: none;
+    border-radius: var(--border-radius);
     box-sizing: border-box;
-    font-family: sans-serif;
-    font-size: 1em;
-    resize: none;
+    font-family: 'Indie Flower';
+    font-size: 1.2em;
+    font-weight: 500;
+    resize: vertical;
     flex-grow: 1;
+    background-color: var(--light-widget-element);
+    color: var(--light-text-color);
+    line-height: 1.4; 
+}
+
+#noteTextarea::placeholder {
+    color: var(--light-text-color-secondary);
+    font-style: italic;
 }
 
 /* ––––––––– Background Widget ––––––––– */
 
 #background-img {
+    background: var(--light-widget-bg);
+    backdrop-filter: var(--backdrop-filter);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 40%;
-    background: #ffffff70;
-    backdrop-filter: blur(15px);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
+    width: 90%;
+    max-width: 400px;
+}
+
+#background-img p {
+    color: var(--light-text-color-secondary);
+    margin: 5px 0;
+    font-size: 0.85em;
 }
 
 #toggleSearchSelector {
     background: transparent;
     border: none;
-    font-size: 1.5em;
-    color: #e9e9e9;
+    font-size: 1.2em;
+    color: var(--light-text-color);
     cursor: pointer;
 }
 
 #searchSelectorContent {
     width: 100%;
+    margin-top: 5px;
 }
 
 .search-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     width: 100%;
 }
 
-#randomBackgroundBtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80%;
-    height: auto;
-    padding: .2em 1em;
+#randomBackgroundBtn,
+#changeBackgroundBtn {
+    background: var(--button-light-bg);
+    color: var(--button-light-text);
     border: none;
-    border-radius: 20px;
-    background: #ffffff70;
-    backdrop-filter: blur(15px);
-    font-size: 1em;
-    color: #e9e9e9;
+    border-radius: var(--border-radius);
+    padding: 0.5em 1em;
+    font-size: 0.9em;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 #randomBackgroundBtn i {
-    margin-right: 1em;
+    margin-right: 0.5em;
 }
 
 #searchInput {
     padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 60%;
-    background: transparent;
-    color: #e9e9e9;
-    border: 1px solid #e9e9e9;
-}
-
-#changeBackgroundBtn {
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: white;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    border-radius: var(--border-radius);
+    width: 70%;
+    background-color: var(--light-widget-element);
+    color: var(--light-text-color); 
+    font-size: 0.9em;
 }
 
+#searchInput::placeholder {
+    color: #aaa;
+}
+
+#randomBackgroundBtn:hover,
 #changeBackgroundBtn:hover {
-    background-color: #0056b3;
+    background-color: var(--light-hover);
+    color: var(--light-text-color);
+    box-shadow: var(--box-shadow);
 }
 
 /* ––––––––– Footer ––––––––– */
@@ -498,11 +802,282 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
-    color: #f3f3f3;
+    padding: 8px;
+    color: var(--light-text-color);
+    background-color: var(--light-widget-bg);
+    backdrop-filter: var(--backdrop-filter);
+    border-radius: var(--border-radius);
     text-align: center;
+    font-size: 0.8em;
 }
 
 footer p {
     margin: 0;
+}
+
+/* ––––––––– Dark Theme ––––––––– */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #333;
+    }
+
+    #timeDate {
+        color: var(--dark-text-color);
+        background: var(--dark-widget-bg);
+    }
+
+    #titleSection h1,
+    #links h2,
+    #weather h2,
+    #policeEvents h2,
+    #notes h2 {
+        color: var(--dark-text-color);
+    }
+
+    #titleSection i {
+        color: #55555577;
+    }
+
+    #titleSection i:hover {
+        color: var(--dark-text-color);
+    }
+
+    #headingConfig {
+        background-color: var(--dark-widget-bg);
+        border-color: #555;
+    }
+
+    #headingConfig input,
+    #headingConfig button {
+        color: var(--dark-text-color);
+        background-color: var(--dark-widget-element);
+    }
+
+    #headingConfig button {
+        background-color: var(--button-dark-bg);
+    }
+
+    #headingConfig button:hover {
+        background-color: var(--dark-hover);
+    }
+
+    #links,
+    #weather,
+    #policeEvents,
+    #notes {
+        color: var(--dark-text-color);
+        background-color: var(--dark-widget-bg);
+    }
+
+    #links ul li {
+        border-radius: var(--border-radius);
+        background-color: var(--dark-widget-element);
+    }
+
+    #links ul li a {
+        color: var(--dark-text-color);
+    }
+
+    #links ul li button.edit-btn,
+    #links ul li button.delete-btn {
+        color: var(--dark-text-color);
+    }
+
+    #addLinkSign {
+        color: var(--dark-text-color);
+    }
+
+    #addLinkSign:hover {
+        color: var(--light-hover);
+    }
+
+    #addLinkInputs input[type="text"],
+    #addLinkInputs input[type="url"] {
+        color: var(--dark-text-color);
+        background-color: var(--dark-widget-element);
+    }
+
+    #addLinkInputs button {
+        background-color: var(--button-dark-bg);
+        color: var(--dark-text-color);
+    }
+    
+    #addLinkInputs button:hover {
+        background-color: var(--dark-hover);
+    }
+
+    #locationInfo {
+        color: var(--dark-text-color);
+    }
+
+    #currentWeather {
+        background-color: var(--dark-widget-element);
+        color: var(--dark-text-color);
+    }
+
+    #temperature {
+        color: var(--dark-text-color);
+    }
+
+    #description {
+        color: var(--dark-text-color);
+    }
+
+    #weather h3 {
+        color: var(--dark-text-color);
+    }
+
+    .forecast-item {
+        background-color: var(--dark-widget-element);
+        color: var(--dark-text-color);
+    }
+
+    .forecast-day {
+        color: var(--dark-text-color);
+    }
+
+    .forecast-temperature {
+        color: var(--dark-text-color);
+    }
+
+    .forecast-description {
+        color: var(--dark-text-color);
+    }
+
+    #configWheel {
+        color: var(--dark-text-color);
+    }
+
+    #configWheel:hover {
+        color: var(--light-hover);
+    }
+
+    #locationControls > button {
+        background-color:  var(--button-dark-bg);
+        color: var(--dark-text-color);
+        border-radius: var(--border-radius);
+    }
+
+    #locationControls > button:hover {
+        background-color: var(--dark-hover);
+        color: var(--button-dark-text);
+    }
+
+    #locationControls input[type="text"] {
+        color: var(--dark-text-color);
+        background-color: var(--dark-widget-element);
+    }
+
+    #locationControls input[type="text"]::placeholder {
+        color: #aaa;
+    }
+
+    #locationControls #fetchCustomWeather {
+        background-color:  var(--button-dark-bg);
+        color: var(--dark-text-color);
+    }
+
+    #locationControls #fetchCustomWeather:hover {
+        background-color: var(--dark-hover);
+        color: var(--button-dark-text);
+    }
+
+    #weatherError {
+        color: #ff8a8a;
+    }
+
+    .eventCard {
+        background-color: var(--dark-widget-element);
+        color: var(--dark-text-color);
+    }
+
+    .eventCard h3 {
+        color: var(--dark-text-color);
+    }
+
+    .eventCard p {
+        color: var(--dark-text-color);
+    }
+
+    #filterToggle {
+        color: var(--dark-text-color);
+    }
+
+    #eventsFilters {
+        color: var(--dark-text-color);
+    }
+
+    #flterForm label {
+        color: var(--dark-text-color);
+    }
+
+    #flterForm select {
+        color: var(--dark-text-color);
+        background-color: var(--dark-widget-bg);
+    }
+
+    #flterForm button[type="submit"] {
+        background-color: var(--button-dark-bg);
+        color: var(--dark-text-color);
+    }
+
+    #flterForm button[type="submit"]:hover {
+        background-color: var(--dark-hover);
+        color: var(--light-hover);
+    }
+
+    #noteTextarea {
+        color: var(--dark-text-color);
+        background-color: var(--dark-widget-element);
+    }
+
+    #noteTextarea::placeholder {
+        color: var(--dark-text-color);
+    }
+
+    #background-img {
+        background: var(--dark-widget-bg);
+        color: var(--dark-text-color);
+    }
+
+    #randomBackgroundBtn {
+        background: var(--button-dark-bg);
+        color: var(--button-dark-text); 
+    }
+
+    #randomBackgroundBtn:hover {
+        background-color: var(--dark-hover); 
+        color: var(--dark-text-color); 
+        box-shadow: var(--box-shadow);
+    }
+
+    #background-img p {
+        color: #d1d1d1; 
+    }
+
+    #searchInput {
+        background-color: var(--dark-widget-element); 
+        color: var(--dark-text-color);
+    }
+
+    #searchInput::placeholder {
+        color: #d1d1d1;
+    }
+
+    #changeBackgroundBtn {
+        background-color: var(--button-dark-bg);
+        color: var(--button-dark-text); 
+    }
+
+    #changeBackgroundBtn:hover {
+        background-color: var(--dark-hover); 
+        color: var(--dark-text-color); 
+        box-shadow: var(--box-shadow);
+    }
+
+    footer {
+        color: var(--dark-text-color);
+        background-color: var(--dark-widget-bg);
+        backdrop-filter: var(--backdrop-filter);
+    }
 }

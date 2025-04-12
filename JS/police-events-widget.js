@@ -6,22 +6,67 @@ document.addEventListener('DOMContentLoaded', function() {
     const filterEventSubmit = document.getElementById('filterEventSubmit');
     const eventsContainer = document.getElementById('eventsContainer');
     const filterToggle = document.getElementById('filterToggle');
+    const filterIcon = filterToggle.querySelector('i');
     const eventsFilters = document.getElementById('eventsFilters');
-    const filterIcon = document.getElementById('filterIcon');
+
+/*     // Explicitly set the initial display state
+    eventsFilters.style.display = 'none'; */
+
+    // Initially fetch and display events
+    fetchAndDisplayEvents();
+    generateEventTypeSelector();
+    generateEventPlaceSelector();
 
     async function fetchPoliceEvents(urlAPI) {
         try {
             const response = await fetch(urlAPI);
-
             if (!response.ok) {
                 throw new Error(`HTTP error: ${response.status}`);
             }
-
             const data = await response.json();
             return data;
         } catch (error) {
             console.error('Error fetching data: ', error);
+            eventsContainer.innerHTML = '<p>Kunde inte hämta händelser.</p>';
             throw error;
+        }
+    }
+
+    async function fetchAndDisplayEvents(eventType = '', place = '') {
+        eventsContainer.innerHTML = '<p>Hämtar händelser...</p>';
+        try {
+            const allEvents = await fetchPoliceEvents(urlAPI);
+            let filteredEvents = allEvents;
+
+            if (eventType && eventType !== '') {
+                filteredEvents = filteredEvents.filter(event => event.type === eventType);
+            }
+            if (place && place !== '') {
+                filteredEvents = filteredEvents.filter(event => event.location.name === place);
+            }
+
+            eventsContainer.innerHTML = ''; // Clear loading message
+
+            if (filteredEvents.length === 0) {
+                eventsContainer.innerHTML = '<p>Inga händelser hittades för de valda filtren.</p>';
+                return;
+            }
+
+            filteredEvents.forEach(event => {
+                const eventDiv = document.createElement('div');
+                eventDiv.className = "eventCard";
+                eventDiv.innerHTML = `
+                    <p>Typ: ${event.type}</p>
+                    <h3>${event.name}</h3>
+                    <p>${event.summary}</p>
+                    <p>Plats: ${event.location.name}</p>
+                    <a href="https://polisen.se/${event.url}" target=_blank>Mer detaljer</a>
+                `;
+                eventsContainer.appendChild(eventDiv);
+            });
+        } catch (error) {
+            console.error('Error displaying events: ', error);
+            eventsContainer.innerHTML = '<p>Kunde inte visa händelser.</p>';
         }
     }
 
@@ -59,61 +104,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    async function displayFilteredEvents(eventType, place) {
-        eventsContainer.innerHTML = '';
-        try {
-            const allEvents = await fetchPoliceEvents(urlAPI);
-            let filteredEvents = allEvents;
-
-            if (eventType) {
-                filteredEvents = filteredEvents.filter(event => event.type === eventType);
-            }
-
-            if (place) {
-                filteredEvents = filteredEvents.filter(event => event.location.name === place);
-            }
-
-            if (filteredEvents.length === 0) {
-                eventsContainer.innerHTML = '<p>Inga händelser hittades för de valda filtren.</p>';
-                return;
-            }
-
-            filteredEvents.forEach(event => {
-                const eventDiv = document.createElement('div');
-                eventDiv.className = "eventCard";
-                eventDiv.innerHTML = `
-                    <p>Typ: ${event.type}</p>
-                    <h3>${event.name}</h3>
-                    <p>${event.summary}</p>
-                    <p>Plats: ${event.location.name}</p>
-                    <a href="https://polisen.se/${event.url}" target=_blank>Mer detaljer</a>
-                `;
-                eventsContainer.appendChild(eventDiv);
-            });
-        } catch (error) {
-            console.error('Error displaying filtered events: ', error);
-            eventsContainer.innerHTML = '<p>Kunde inte hämta eller visa händelser.</p>';
-        }
-    }
-
     filterEventSubmit.addEventListener('click', function(event) {
         event.preventDefault();
         const selectedEventType = eventTypeSelector.value;
         const selectedPlace = eventPlaceSelector.value;
-        displayFilteredEvents(selectedEventType, selectedPlace);
+        fetchAndDisplayEvents(selectedEventType, selectedPlace);
     });
 
     filterToggle.addEventListener('click', function() {
-        if (eventsFilters.style.display === 'none') {
-            eventsFilters.style.display = 'block';
-            filterIcon.innerHTML = '&#9650;'; // Change icon to up arrow
-        } else {
-            eventsFilters.style.display = 'none';
-            filterIcon.innerHTML = '&#9660;'; // Change icon to down arrow
+        eventsFilters.classList.toggle('open'); // Toggle an 'open' class on the filters
+        filterToggle.classList.toggle('open-toggle'); // Toggle an 'open-toggle' class on the toggle
+
+        if (filterIcon) {
+            filterIcon.classList.toggle('fa-filter');
+            filterIcon.classList.toggle('fa-times');
         }
     });
-
-    generateEventTypeSelector();
-    generateEventPlaceSelector();
-    displayFilteredEvents('', '');
 });
