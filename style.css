@@ -14,7 +14,7 @@
     --dark-text-color: #f1f1f1;
     --light-hover: #fff;
     --dark-hover: #000;
-    --backdrop-filter: blur(15px);
+    --backdrop-filter: blur(5px);
     --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -70,7 +70,7 @@ body {
 }
 
 #date {
-    font-weight: lighter;
+    font-weight: 350;
 }
 
 /* ––––––––– Dashbord title ––––––––– */
@@ -96,12 +96,15 @@ body {
 }
 
 #titleSection h1 {
-    font-size: 2rem;
+    padding: 0.1em 0.5em;
+    font-size: 3em;
+    background-color: var(--light-widget-bg) ;
+    backdrop-filter: var(--backdrop-filter);
+    border-radius: var(--border-radius);
 }
 
 #titleSection i {
     opacity: 0;
-    margin-left: 1rem;
     font-size: 2rem;
     cursor: pointer;
     color: var(--light-widget-element);
@@ -109,7 +112,8 @@ body {
 
 #titleSection i:hover {
     transform: scale(1.2);
-    color: var(--light-hover);}
+    color: var(--light-hover);
+}
 
 #headingConfig {
     position: absolute;
@@ -141,8 +145,8 @@ body {
 }
 
 #headingConfig button:hover {
-    background-color: #0056b3;
-    color: white;
+    background-color: var(--light-hover);
+    color: #000;
 }
 
 
@@ -177,6 +181,8 @@ body {
     position: relative;
 }
 
+#titleSection h1,
+#titleSection h2,
 #links h2,
 #weather h2,
 #policeEvents h2,
@@ -826,7 +832,13 @@ footer p {
         background: var(--dark-widget-bg);
     }
 
+    #titleSection h1 {
+        background-color: var(--dark-widget-bg);
+    }
+
+
     #titleSection h1,
+    #titleSection h2,
     #links h2,
     #weather h2,
     #policeEvents h2,
@@ -844,7 +856,6 @@ footer p {
 
     #headingConfig {
         background-color: var(--dark-widget-bg);
-        border-color: #555;
     }
 
     #headingConfig input,
@@ -859,6 +870,7 @@ footer p {
 
     #headingConfig button:hover {
         background-color: var(--dark-hover);
+        color: #fff;
     }
 
     #links,

@@ -38,6 +38,10 @@
             <i id="headingConfigWheel" class="fa-solid fa-gear"></i>
 
             <div id="headingConfig" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h2>Ändra titel och färg</h2>
+                    <i id="closeHeadingConfig" class="fa-solid fa-times" style="cursor: pointer;"></i>
+                </div>
                 <input type="text" id="newTitle" placeholder="Ny Titel">
                 <input type="color" id="titleColorPicker" value="">
                 <button id="changeTitleBtn">Ändra Titel</button>
@@ -45,6 +49,7 @@
         </section>
 
         <section id="widgets">
+
             <div id="links">
                 <h2>Mina länkar</h2>
 
@@ -87,7 +92,6 @@
                 </div>
 
                 <div id="weatherError" style="color: red;"></div>
-
             </div>
 
             <div id="policeEvents">
@@ -145,7 +149,5 @@
 </html>
 
 <!-- Notes:
-– Add media query for dark theme and smaller screens
-- Links widget editar no funciona y +
-- weather location don't work on second click
+- mirar comentarios en js y para readme
 -mirar donde guarda notas-->

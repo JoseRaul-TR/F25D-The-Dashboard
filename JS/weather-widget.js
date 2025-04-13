@@ -1,13 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const openWeatherApiKey = ''; // <–– * IMPORTANT!!!! * Fill in OpenWeather API key before test! 
-    
+    const openWeatherApiKey = '4be88e215065dcc04ca5002fe5fd681b'; // <–– * IMPORTANT!!!! * Fill in OpenWeather API key before test!
+
     // DOM element references
     const temperatureDiv = document.getElementById('temperature');
     const descriptionDiv = document.getElementById('description');
     const weatherIconDiv = document.getElementById('weatherIcon');
     const forecastDiv = document.getElementById('forecast');
-    const detailsDiv = document.getElementById('details');
     const errorDiv = document.getElementById('weatherError');
     const useGeolocationButton = document.getElementById('useGeolocation');
     const locationNameInput = document.getElementById('locationName');
@@ -17,15 +16,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const locationControls = document.getElementById('locationControls');
     const locationConfig = document.getElementById('locationConfig');
 
-
-    // Function to fetch weather data from OpenWeather API
+    // Fetches weather data (current and forecast) from the OpenWeather API.
     async function fetchWeatherData(urlCurrent, urlForecast) {
         if (!openWeatherApiKey) {
             alert("Please enter your OpenWeather API key in the code.");
-            throw new Error("API key not provided."); // Console error
+            throw new Error("API key not provided."); // Throw error if API key is missing
         }
 
         try {
+            // Fetch both current and forecast data concurrently
             const [currentResponse, forecastResponse] = await Promise.all([
                 fetch(urlCurrent),
                 fetch(urlForecast)
@@ -55,14 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Error fetching weather data:', error.message);
-            displayError(error.message.startsWith('City not found.') ? `Kunde inte hitta orten: ${locationNameInput.value}` : "Något gick fel vid hämtning av väderdata."); // Message to user
+            displayError(error.message.startsWith('City not found.') ? `Kunde inte hitta orten: ${locationNameInput.value}` : "Något gick fel vid hämtning av väderdata."); // Display user-friendly error message
             return { currentWeather: null, forecastData: null };
         }
     }
 
-    // Function to display current weather
+    // Displays the current weather information in the UI.
     function displayCurrentWeather(data) {
-        if (data && data.main && data.weather && data.weather.length > 0 && data.name && data.sys && data.sys.country) {
+        if (data?.main && data?.weather?.length > 0 && data?.name && data?.sys?.country) {
             const temperatureCelsius = Math.round(data.main.temp - 273.15);
             const description = data.weather[0].description;
             const iconCode = data.weather[0].icon;
@@ -74,22 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
             temperatureDiv.textContent = `${temperatureCelsius}°C`;
             descriptionDiv.textContent = description.charAt(0).toUpperCase() + description.slice(1);
             weatherIconDiv.innerHTML = `<img src="${iconUrl}" alt="${description}">`;
-            errorDiv.textContent = ''; // Clear any previous content
+            errorDiv.textContent = ''; // Clear any previous error messages
         } else {
-            displayError("Kunde inte visa aktuell väderinformation."); // Message to user
+            displayError("Kunde inte visa aktuell väderinformation."); // Display error if data is invalid
         }
     }
 
-    // Function to display weather forecast
+    // Displays the 5-day weather forecast in the UI, showing one item per day.
     function displayForecast(data) {
-
-        if (data && data.list) {
+        if (data?.list) {
             const dailyForecast = {};
             data.list.forEach(item => {
                 const date = new Date(item.dt * 1000).toLocaleDateString();
-                if (!dailyForecast[date]) {
-                    dailyForecast[date] = [];
-                }
+                dailyForecast[date] = dailyForecast[date] || [];
                 dailyForecast[date].push(item);
             });
 
@@ -99,13 +95,14 @@ document.addEventListener('DOMContentLoaded', () => {
             for (const dateKey in dailyForecast) {
                 if (dateKey !== today) {
                     const dayData = dailyForecast[dateKey];
+                    // Use midday data for a representative forecast, or the first entry if midday is not available
                     const middayData = dayData.find(item => new Date(item.dt * 1000).getHours() >= 12 && new Date(item.dt * 1000).getHours() < 15) || dayData[0];
                     if (middayData) {
                         const date = new Date(middayData.dt * 1000);
                         const temp = Math.round(middayData.main.temp - 273.15);
                         const iconCode = middayData.weather[0].icon;
                         const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-                        const dayOfWeek = new Date(middayData.dt * 1000).toLocaleDateString('sv-SE', { weekday: 'long' });
+                        const dayOfWeek = date.toLocaleDateString('sv-SE', { weekday: 'long' });
                         const dayNumber = date.getDate();
                         const month = date.toLocaleDateString('sv-SE', { month: 'long'});
                         const description = middayData.weather[0].description;
@@ -130,22 +127,21 @@ document.addEventListener('DOMContentLoaded', () => {
             forecastDiv.innerHTML = forecastItemsHTML;
         } else {
             console.warn("No forecast available.");
-            forecastDiv.textContent = 'Ingen prognos tillgänglig.'; // Message to user
+            forecastDiv.textContent = 'Ingen prognos tillgänglig.'; // Inform user if no forecast data
         }
     }
 
-    // Function to display error messages to the user (in Swedish)
+    // Displays an error message to the user and clears weather information.
     function displayError(message) {
         errorDiv.textContent = message;
         temperatureDiv.textContent = '';
         descriptionDiv.textContent = '';
         weatherIconDiv.innerHTML = '';
         forecastDiv.textContent = '';
-        detailsDiv.innerHTML = '';
         locationInfoDiv.textContent = '';
     }
 
-    // Function to get weather by coordinates
+    // Fetches weather data by geographical coordinates.
     async function getWeatherByCoords(latitude, longitude) {
         const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openWeatherApiKey}&lang=sv`;
         const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${openWeatherApiKey}&lang=sv`;
@@ -162,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to get weather by city name
+    // Fetches weather data by city name.
     async function getWeatherByCity(city) {
         const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${openWeatherApiKey}&lang=sv`;
         const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${openWeatherApiKey}&lang=sv`;
@@ -173,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             displayCurrentWeather(currentWeather);
             localStorage.setItem('lastLocation', city); // Store city for custom location
         } else {
-            displayError(`Kunde inte hitta orten: ${city}`); // Message to user
+            displayError(`Kunde inte hitta orten: ${city}`); // Display error if city not found
             return;
         }
 
@@ -182,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to first load weather based on stored location, geolocation or ask location to user
+    // Loads weather data on startup based on stored location, geolocation, or by prompting the user.
     function loadWeatherOnStartup() {
         const storedLocation = localStorage.getItem('lastLocation');
         if (storedLocation) {
@@ -194,29 +190,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 error => {
                     console.error("Error retrieving location:", error);
-                    alert("Kunde inte hämta din plats. Ange en ort manuellt."); // Error retrieving location
+                    alert("Kunde inte hämta din plats. Ange en ort manuellt."); // Inform user about geolocation failure
                     locationControls.style.display = 'flex'; // Show manual input controls
                 }
             );
         } else {
-            alert("Din webbläsare stöder inte geolokalisering. Ange en ort manuellt."); // Error retrieving location
+            alert("Din webbläsare stöder inte geolokalisering. Ange en ort manuellt."); // Inform user about lack of geolocation support
             locationControls.style.display = 'flex'; // Show manual input controls
         }
     }
 
-    // Event listener for the config wheel to toggle location controls and icon
-    if (configWheel && locationConfig) {
+    // Event listener for the config wheel to toggle visibility of location controls and the wheel icon
+    if (configWheel && locationConfig && locationControls) {
         configWheel.addEventListener('click', () => {
             locationConfig.classList.toggle('controls-visible');
+            locationControls.style.display = locationConfig.classList.contains('controls-visible') ? 'flex' : 'none'; // Toggle location controls visibility
+
             const configWheelIcon = configWheel.querySelector('i');
             if (configWheelIcon) {
-                if (configWheelIcon.classList.contains('fa-cog')) {
-                    configWheelIcon.classList.remove('fa-cog');
-                    configWheelIcon.classList.add('fa-times');
-                } else {
-                    configWheelIcon.classList.remove('fa-times');
-                    configWheelIcon.classList.add('fa-cog');
-                }
+                configWheelIcon.classList.toggle('fa-cog');
+                configWheelIcon.classList.toggle('fa-times');
             }
         });
     }
@@ -229,9 +222,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     position => {
                         getWeatherByCoords(position.coords.latitude, position.coords.longitude);
                         if (locationControls) {
-                            locationControls.style.display = 'none'; // Hide controls after action
+                            locationControls.style.display = 'none'; // Hide controls after successful geolocation
                         }
-                        // Ensure config wheel shows cog after geolocation success
+                        // Ensure config wheel shows cog after geolocation success (redundant with configWheel listener)
                         const configWheelIcon = configWheel.querySelector('i');
                         if (configWheelIcon && configWheelIcon.classList.contains('fa-times')) {
                             configWheelIcon.classList.remove('fa-times');
@@ -243,14 +236,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     error => {
                         console.error("Error retrieving location:", error);
-                        displayError("Kunde inte hämta din plats."); // Message to user
+                        displayError("Kunde inte hämta din plats."); // Inform user about geolocation error
                         if (locationControls) {
-                            locationControls.style.display = 'flex'; // Show manual input controls
+                            locationControls.style.display = 'flex'; // Show manual input controls on error
                         }
                     }
                 );
             } else {
-                displayError("Din webbläsare stöder inte geolokalisering."); // Message to user
+                displayError("Din webbläsare stöder inte geolokalisering."); // Inform user about lack of geolocation support
                 if (locationControls) {
                     locationControls.style.display = 'flex'; // Show manual input controls
                 }
@@ -265,9 +258,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (city) {
                 getWeatherByCity(city);
                 if (locationControls) {
-                    locationControls.style.display = 'none'; // Hide controls after action
+                    locationControls.style.display = 'none'; // Hide controls after successful custom weather fetch
                 }
-                // Ensure config wheel shows cog after custom weather fetch
+                // Ensure config wheel shows cog after custom weather fetch (redundant with configWheel listener)
                 const configWheelIcon = configWheel.querySelector('i');
                 if (configWheelIcon && configWheelIcon.classList.contains('fa-times')) {
                     configWheelIcon.classList.remove('fa-times');
@@ -277,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     locationConfig.classList.remove('controls-visible');
                 }
             } else {
-                displayError("Ange en ort."); // Message to user
+                displayError("Ange en ort."); // Inform user to enter a city
             }
         });
     }
@@ -286,8 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (locationNameInput) {
         locationNameInput.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
-                event.preventDefault(); // Prevent default form submission if any
-                fetchCustomWeatherButton.click(); // Trigger the button's click event
+                event.preventDefault(); // Prevent default form submission
+                fetchCustomWeatherButton.click(); // Trigger the fetch custom weather button click
             }
         });
     }
