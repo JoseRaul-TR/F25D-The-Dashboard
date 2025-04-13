@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const openWeatherApiKey = '4be88e215065dcc04ca5002fe5fd681b'; // <–– * IMPORTANT!!!! * Fill in OpenWeather API key before test!
+    const openWeatherApiKey = ''; // <–– * IMPORTANT!!!! * Fill in OpenWeather API key before test!
 
     // DOM element references
     const temperatureDiv = document.getElementById('temperature');

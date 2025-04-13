@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // API key for Unsplash
-    const UnsplashApiKey = 'cCyZy-mlvYhKKpKN2MHT60S9IZnDgRsO6G3rnfp4Np0'; // <–– * IMPORTANT!!!! * Fill in Unsplash API key before test!
+    const UnsplashApiKey = ''; // <–– * IMPORTANT!!!! * Fill in Unsplash API key before test!
 
     // DOM element references
     const changeBackgroundBtn = document.getElementById('changeBackgroundBtn');
