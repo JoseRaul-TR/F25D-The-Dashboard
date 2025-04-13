@@ -57,8 +57,8 @@ The widgets should load and function automatically.
 
 ### API Keys
 
-* **OpenWeatherMap API Key:** You will need to fill in `const openWeatherApiKey = '';` in the `weather widget` JavaScript code with your own API key from [OpenWeatherMap](https://openweathermap.org/api).
-* **Unsplash API Key:** You will need to fill in ` const UnsplashApiKey = '';` in the `background image changer` JavaScript code with your own API key from [Unsplash](https://unsplash.com/developers).
+* **OpenWeatherMap API Key:** You will need to fill in `const openWeatherApiKey = '';` in the `weather-widget.js` JavaScript code with your own API key from [OpenWeatherMap](https://openweathermap.org/api).
+* **Unsplash API Key:** You will need to fill in ` const UnsplashApiKey = '';` in the `background-img.js` JavaScript code with your own API key from [Unsplash](https://unsplash.com/developers).
 
 **Important:** Ensure you replace these placeholder API keys with your actual keys for the weather and background image widgets to function correctly.
 
